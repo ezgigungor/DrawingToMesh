@@ -5,14 +5,10 @@ using UnityEngine;
 public class Line : MonoBehaviour
 {
 
-    private LineRenderer _lineRenderer;
-
-    private List<Vector3> _points;
     [SerializeField, Range(0, 1)]
     private float minDistance = 0.2f;
-
-
-   
+    private List<Vector3> _points;
+    private LineRenderer _lineRenderer;
 
     private void Awake()
     {
@@ -27,10 +23,8 @@ public class Line : MonoBehaviour
 
         _points.Add(point);
         _lineRenderer.positionCount++;
-        _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, point);
-        
+        _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, point); 
     }
-
 
     public List<Vector3> GetPoints() => _points;
     

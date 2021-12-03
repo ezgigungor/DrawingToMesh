@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public class MeshGenerator : MonoBehaviour
 {
     [SerializeField]
@@ -11,7 +9,6 @@ public class MeshGenerator : MonoBehaviour
     
     [SerializeField, Range(0, 1)]
     private float _radius = 0.2f;
-
 
     private Mesh _mesh;
 
@@ -22,21 +19,17 @@ public class MeshGenerator : MonoBehaviour
     }
     public void GenerateMesh(List<Vector3> points)
     {
-
+        float segmentAngle = 2 * Mathf.PI / _segmentCount;
         int vertexCount = points.Count * _segmentCount;
         int triangleCount = (points.Count - 1) * _segmentCount * 2;
         List<Vector3> vertices = new List<Vector3>(vertexCount);
-
         int[] triangles = new int[triangleCount * 3];
 
-
-        float segmentAngle = 2 * Mathf.PI / _segmentCount;
-
+        //Calculates the facing direction of the circle to be generated at the point
+        //by averaging previous and next facing directions
         for (int i = 0; i < points.Count; i++)
         {
-
             float currentAngle = 0f;
-
             Vector3 direction = Vector3.forward;
             Vector3 center = points[i];
 
@@ -60,19 +53,15 @@ public class MeshGenerator : MonoBehaviour
                 Vector3 offset = new Vector3(Mathf.Cos(currentAngle), Mathf.Sin(currentAngle), 0) * _radius;
                 vertices.Add(center + (facingDirection * offset));
 
+                //Change the facing diretion of the first circle to be the same as the second one
                 if (i == 1)
                     vertices[((i-1) * _segmentCount) + j] = points[i-1] + (facingDirection * offset);
 
                 currentAngle -= segmentAngle;
-
-                
             }
-
-            
-
         }
 
-
+        // Setting triangles as a cylinder between each point
         for (int i = 0; i < triangleCount / 2; i++)
         {
             int j = i * 6;

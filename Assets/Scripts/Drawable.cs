@@ -8,8 +8,8 @@ using UnityEngine;
 public class Drawable : MonoBehaviour
 {
 
-    public GameObject linePrefab;
-    public MeshGenerator meshGenerator;
+    public GameObject LinePrefab;
+    public MeshGenerator MeshGenerator;
     
     private Line _currentLine;
     private GameObject _prevLine;
@@ -41,26 +41,44 @@ public class Drawable : MonoBehaviour
 
     private void BeginDraw()
     {
+
+        if (!IsDrawingOnBoard())
+            return;
+
         if (_prevLine)
             Destroy(_prevLine);
 
-        _currentLine = Instantiate(linePrefab, transform.position, Quaternion.identity).GetComponent<Line>();
+        _currentLine = Instantiate(LinePrefab, transform.position, Quaternion.identity).GetComponent<Line>();
     }
 
     private void Draw()
     {
-        Ray ray  = _camera.ScreenPointToRay(Input.mousePosition);
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-       
-        if (Physics.Raycast(ray, out hit))
-            _currentLine.AddPoint(hit.point);
+
+
+        if (Physics.Raycast(ray, out hit) && hit.transform.gameObject == this.gameObject)
+                _currentLine.AddPoint(hit.point);
         
     }
 
     private void EndDraw()
     {
-         meshGenerator.GenerateMesh(_currentLine.GetPoints());
+        if (_currentLine == null)
+            return;
+         MeshGenerator.GenerateMesh(_currentLine.GetPoints());
         _prevLine = _currentLine.gameObject;
         _currentLine = null; 
+    }
+
+
+    private bool IsDrawingOnBoard()
+    {
+        Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+            return hit.transform.gameObject == this.gameObject;
+        return false;
     }
 }
