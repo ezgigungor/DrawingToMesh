@@ -7,24 +7,20 @@ using UnityEngine;
 
 public class Drawable : MonoBehaviour
 {
-
     public GameObject LinePrefab;
-    public MeshGenerator MeshGenerator;
-    
+    public MeshObject MeshObject;
     private Line _currentLine;
     private GameObject _prevLine;
     private Camera _camera;
 
-
     private void Start()
     {
         _camera = Camera.main;
-        
+        //MeshObject = GetComponent<MeshObject>();
     }
 
     private void Update()
     { 
-
         if (Input.GetMouseButtonDown(0))
             BeginDraw();
 
@@ -41,7 +37,6 @@ public class Drawable : MonoBehaviour
 
     private void BeginDraw()
     {
-
         if (!IsDrawingOnBoard())
             return;
 
@@ -56,7 +51,6 @@ public class Drawable : MonoBehaviour
         Ray ray = _camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-
         if (Physics.Raycast(ray, out hit) && hit.transform.gameObject == this.gameObject)
                 _currentLine.AddPoint(hit.point);
         
@@ -64,9 +58,11 @@ public class Drawable : MonoBehaviour
 
     private void EndDraw()
     {
-        if (_currentLine == null)
+         if(_currentLine == null)
             return;
-         MeshGenerator.GenerateMesh(_currentLine.GetPoints());
+
+        Mesh mesh = MeshGenerator.Instance.GenerateMesh(_currentLine.Points);
+        MeshObject.ResetMesh(mesh);
         _prevLine = _currentLine.gameObject;
         _currentLine = null; 
     }

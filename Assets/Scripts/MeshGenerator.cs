@@ -10,15 +10,22 @@ public class MeshGenerator : MonoBehaviour
     [SerializeField, Range(0, 1)]
     private float _radius = 0.2f;
 
-    private Mesh _mesh;
+    private static MeshGenerator _instance;
+    public static MeshGenerator Instance { get { return _instance; } }
 
-    private void Start()
+    private void Awake()
     {
-        _mesh = new Mesh();
-        GetComponent<MeshFilter>().mesh = _mesh;
+        if (_instance != null && _instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        _instance = this;
     }
-    public void GenerateMesh(List<Vector3> points)
+
+    public Mesh GenerateMesh(List<Vector3> points)
     {
+        Mesh mesh = new Mesh();
         float segmentAngle = 2 * Mathf.PI / _segmentCount;
         int vertexCount = points.Count * _segmentCount;
         int triangleCount = (points.Count - 1) * _segmentCount * 2;
@@ -84,10 +91,11 @@ public class MeshGenerator : MonoBehaviour
             }
         }
 
-        _mesh.Clear();
-        _mesh.vertices = vertices.ToArray();
-        _mesh.triangles = triangles;
-        _mesh.RecalculateNormals();
+        mesh.Clear();
+        mesh.vertices = vertices.ToArray();
+        mesh.triangles = triangles;
+        mesh.RecalculateNormals();
+        return mesh;
     }
 
 }
