@@ -10,12 +10,9 @@ public class Drawable : MonoBehaviour
 
     public GameObject linePrefab;
     public MeshGenerator meshGenerator;
-
-    
     
     private Line _currentLine;
     private GameObject _prevLine;
-
     private Camera _camera;
 
 
@@ -46,10 +43,8 @@ public class Drawable : MonoBehaviour
     {
         if (_prevLine)
             Destroy(_prevLine);
-        
-     
+
         _currentLine = Instantiate(linePrefab, transform.position, Quaternion.identity).GetComponent<Line>();
-        
     }
 
     private void Draw()
@@ -58,16 +53,13 @@ public class Drawable : MonoBehaviour
         RaycastHit hit;
        
         if (Physics.Raycast(ray, out hit))
-        { 
-            Debug.DrawLine(ray.origin, hit.point);
-            Debug.Log(hit.point);
             _currentLine.AddPoint(hit.point);
-        }
+        
     }
 
     private void EndDraw()
     {
-         meshGenerator.GenerateMesh(_currentLine._points);
+         meshGenerator.GenerateMesh(_currentLine.GetPoints());
         _prevLine = _currentLine.gameObject;
         _currentLine = null; 
     }

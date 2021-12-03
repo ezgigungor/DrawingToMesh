@@ -40,7 +40,7 @@ LineRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4961093160374413536}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 0
@@ -140,4 +140,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111290acb0e90744caeba1c7f1bb5530, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDistance: 0.18
+  minDistance: 0.175

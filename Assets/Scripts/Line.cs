@@ -7,7 +7,7 @@ public class Line : MonoBehaviour
 
     private LineRenderer _lineRenderer;
 
-    public List<Vector3> _points { get; set; } = new List<Vector3>();
+    private List<Vector3> _points;
     [SerializeField, Range(0, 1)]
     private float minDistance = 0.2f;
 
@@ -16,8 +16,10 @@ public class Line : MonoBehaviour
 
     private void Awake()
     {
+        _points = new List<Vector3>();
         _lineRenderer = GetComponent<LineRenderer>();
     }
+
     public void AddPoint(Vector3 point)
     {
         if (_lineRenderer.positionCount >= 1 && Vector2.Distance(point, _lineRenderer.GetPosition(_lineRenderer.positionCount - 1)) < minDistance)
@@ -28,4 +30,8 @@ public class Line : MonoBehaviour
         _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, point);
         
     }
+
+
+    public List<Vector3> GetPoints() => _points;
+    
 }

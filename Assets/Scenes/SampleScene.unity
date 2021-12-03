@@ -504,5 +504,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7c6949d278c95d4d95466325a115d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segmentCount: 9
-  radius: 0.029
+  _segmentCount: 20
+  _radius: 0.069
