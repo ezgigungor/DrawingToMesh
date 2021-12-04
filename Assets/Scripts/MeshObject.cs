@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MeshObject : MonoBehaviour
@@ -9,6 +7,7 @@ public class MeshObject : MonoBehaviour
     private MeshCollider _meshCollider;
     private MeshFilter _meshFilter;
     private Rigidbody _rigidbody;
+
     private void Awake()
     {
         _originalPosition = transform.position;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -16,7 +14,6 @@ public class Drawable : MonoBehaviour
     private void Start()
     {
         _camera = Camera.main;
-        //MeshObject = GetComponent<MeshObject>();
     }
 
     private void Update()
