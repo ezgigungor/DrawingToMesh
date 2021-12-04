@@ -10,17 +10,16 @@ public class MeshGenerator : MonoBehaviour
     [SerializeField, Range(0, 1)]
     private float _radius = 0.2f;
 
-    private static MeshGenerator _instance;
-    public static MeshGenerator Instance { get { return _instance; } }
+    public static MeshGenerator Instance { get; private set; }
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (Instance != null && Instance != this)
         {
             Destroy(this.gameObject);
             return;
         }
-        _instance = this;
+        Instance = this;
     }
 
     public Mesh GenerateMesh(List<Vector3> points)
